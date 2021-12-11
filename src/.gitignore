@@ -1,0 +1,14 @@
+node_modules/
+build/
+target/
+
+.eslintcache
+coverage/
+.env.development
+
+cypress/screenshots/*/*/*.png
+reports
+results
+
+.idea/
+*.iml
