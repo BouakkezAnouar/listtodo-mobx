@@ -1,17 +1,23 @@
 import { observable, action, autorun, makeObservable } from "mobx";
+import { ToDoModel } from "../components/ToDoListItem/TodoListItem";
 
 export class ListToDoStore {
   constructor() {
     makeObservable(this);
-    autorun(() => console.log(this.todos[0]));
   }
-  @observable todos: string[] = [];
+  @observable todos: ToDoModel[] = [];
   @observable textInput: string = "";
   @action addToDo = (value: string) => {
-    this.todos.push(value);
+    this.todos.push({ id: Date.now(), value, isCompleted: false } as ToDoModel);
   };
   @action setTextInput = (text: string) => {
     this.textInput = text;
+  };
+  @action toggleToDo(todo: ToDoModel) {
+    todo.isCompleted = !todo.isCompleted;
+  }
+  @action ClearCompletedTodos = () => {
+    this.todos = this.todos.filter((todo) => !todo.isCompleted);
   };
 }
 

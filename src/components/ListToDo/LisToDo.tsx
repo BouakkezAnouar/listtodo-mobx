@@ -1,7 +1,7 @@
 import { observer, inject } from "mobx-react";
 import { Component, ChangeEvent, KeyboardEvent } from "react";
-import { ListToDoStore } from "../stores/ListToDoStore";
-
+import { ListToDoStore } from "../../stores/ListToDoStore";
+import TodoListItem from "../ToDoListItem/TodoListItem";
 export interface IStore {
   store?: ListToDoStore;
 }
@@ -23,6 +23,10 @@ class ListToDo extends Component<IStore> {
       this.addTodo();
     }
   };
+
+  private clearCompletedTodos = () => {
+    this.props.store?.ClearCompletedTodos();
+  };
   public render() {
     return (
       <div>
@@ -32,10 +36,11 @@ class ListToDo extends Component<IStore> {
           onKeyPress={this.handleOnKeyPress}
           value={this.props.store?.textInput}
         />
+        <button onClick={this.clearCompletedTodos}>clear completed</button>
         <button onClick={this.addTodo}>Add</button>
         <ul>
           {this.props.store?.todos.map((todo, index) => (
-            <li key={index}>{todo}</li>
+            <TodoListItem todo={todo} key={index} />
           ))}
         </ul>
       </div>
