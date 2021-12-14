@@ -11,14 +11,18 @@ const ListToDo: FC<IStore> = ({ store }) => {
     store!.setTextInput(event.target.value);
   };
 
-  const addTodo = (): void => {
+  const handleAddClick = (): void => {
+    //Prevent creating an empty todo
+    if (!store?.textInput.trim()) return;
+
     store!.addToDo(store?.textInput!);
+    //clear input text after adding todo
     store!.setTextInput("");
   };
 
   const handleOnKeyPress = (event: KeyboardEvent<HTMLDivElement>): void => {
     if (event.key === "Enter") {
-      addTodo();
+      handleAddClick();
     }
   };
 
@@ -35,7 +39,7 @@ const ListToDo: FC<IStore> = ({ store }) => {
         value={store?.textInput}
       />
       <button onClick={clearCompletedTodos}>clear completed</button>
-      <button onClick={addTodo}>Add</button>
+      <button onClick={handleAddClick}>Add</button>
       <ul>
         {store?.todos.map((todo, index) => (
           <TodoListItem todo={todo} key={index} />
