@@ -1,4 +1,4 @@
-import { observable, action, autorun, makeObservable } from "mobx";
+import { observable, action, makeObservable } from "mobx";
 import { ToDoModel } from "../components/ToDoListItem/TodoListItem";
 
 export class ListToDoStore {
