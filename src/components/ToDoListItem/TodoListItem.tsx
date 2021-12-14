@@ -13,17 +13,26 @@ export interface IToDoProps {
   store?: ListToDoStore;
 }
 
-const TodoListItem: FC<IToDoProps> = ({ todo, store }) => {
-  const toggleTodo = () => {
-    store?.toggleToDo(todo);
-  };
-  return (
-    <div
-      style={{ textDecoration: todo.isCompleted ? "line-through" : undefined }}
-    >
-      <input type="checkbox" onChange={toggleTodo} checked={todo.isCompleted} />{" "}
-      {todo.value}
-    </div>
-  );
-};
-export default inject("store")(observer(TodoListItem));
+const TodoListItem: FC<IToDoProps> = inject("store")(
+  observer((props) => {
+    const toggleTodo = () => {
+      props.store?.toggleToDo(props.todo);
+    };
+    return (
+      <div
+        style={{
+          textDecoration: props.todo.isCompleted ? "line-through" : undefined,
+        }}
+      >
+        <input
+          type="checkbox"
+          onChange={toggleTodo}
+          checked={props.todo.isCompleted}
+        />{" "}
+        {props.todo.value}
+      </div>
+    );
+  })
+);
+
+export default TodoListItem;
